@@ -11,7 +11,7 @@
 'use strict';
 var AWS = require("aws-sdk");
 AWS.config.update({accessKeyId: 'AKIAI622QKRBOFAI5CVQ', secretAccessKey: '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'});
-AWS.config.update({region: 'us-east'});
+AWS.config.update({region: 'us-east-1'});
 
 var storage = (function () {
     var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
