@@ -17,7 +17,8 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
     intentHandlers.NewGameIntent = function (intent, session, response) {
         //reset scores for all existing players
         storage.loadGame(session, function (currentGame) {
-        	response.tell('');
+            initial(currentGame);
+            checkNextStatus(currentGame, currentGame.data.position, response);
         });
 
 
@@ -28,7 +29,7 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
             initial(currentGame);
             var clonedArray = currentGame.data.position.concat();
             clonedArray[0] -= 1;
-            checkNextStatus(clonedArray, response);
+            checkNextStatus(currentGame, clonedArray, response);
         });
     };
 
@@ -37,7 +38,7 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
             initial(currentGame);
             var clonedArray = currentGame.data.position.concat();
             clonedArray[0] += 1;
-            checkNextStatus(clonedArray, response);
+            checkNextStatus(currentGame, clonedArray, response);
         });
     };
 
@@ -46,7 +47,7 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
             initial(currentGame);
             var clonedArray = currentGame.data.position.concat();
             clonedArray[1] -= 1;
-            checkNextStatus(clonedArray, response);
+            checkNextStatus(currentGame, clonedArray, response);
         });
     };
 
@@ -55,7 +56,7 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
             initial(currentGame);
             var clonedArray = currentGame.data.position.concat();
             clonedArray[1] += 1;
-            checkNextStatus(clonedArray, response);
+            checkNextStatus(currentGame, clonedArray, response);
         });
     };
 
@@ -99,29 +100,35 @@ function initial(currentGame){
     }
 }
 
-function checkNextStatus(clonedArray, response){
+function checkNextStatus(currentGame, clonedArray, response){
     var x = clonedArray[0];
     var y = clonedArray[1];
-    if(map[x] && map[x][y]){
+    if(map.grid[x] && map.grid[x][y]){
         //call a function and then update the array
-        // outputResponse(status, response);
-        return storage.update(clonedArray);
+        console.log("in", x, y);
+        outputResponse(map.grid[x][y], response);
+        return currentGame.update(clonedArray);
     } else{
         response.tell('there is a wall');
     }
 }
 
 function outputResponse(status, response){
-    switch(status) {
-    case 1:
-        response.tell("");
-        break;
-    case 2:
-        response.tell("");
-        break;
-    default:
-        response.tell("Oops, something is wrong")
+    if(map.item[status]){
+        var itemData = map.item[status];
+        if(itemData.image){
+            response.askWithCard(itemData.scene);
+        }
+        else{
+            response.ask(itemData.scene);
+        }
     }
-}
+    else{
+        response.tell("");
+    }
 
+}
+exports.initial = initial;
+exports.checkNextStatus = checkNextStatus;
+exports.outputResponse = outputResponse;
 exports.register = registerIntentHandlers;

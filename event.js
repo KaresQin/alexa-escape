@@ -10,7 +10,8 @@
 
 'use strict';
 var storage = require('./storage');
-var utils = require('./utils');
+var intent = require('./intent');
+var map = require('./map');
 
 var registerEventHandlers = function (eventHandlers, skillContext) {
     eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
@@ -23,17 +24,10 @@ var registerEventHandlers = function (eventHandlers, skillContext) {
         //Speak welcome message and ask user questions
         //based on whether there are players or not.
         storage.loadGame(session, function (currentGame) {
-            var speechOutput = '',
-                reprompt;
-            reprompt = {
-                type : "SSML",
-                speech : "<speak>Woo, I open it now <audio src=\"https://s3.amazonaws.com/alexa-transporter/audio/open-box.mp3\" />. It's a key.</speak>"
-            }
-            response.askWithCard(speechOutput, reprompt, "right now", "It looks like a door?", {
-                    "smallImageUrl":  "https://s3.amazonaws.com/alexa-transporter/picture/door.jpg",
-                    "largeImageUrl":  "https://s3.amazonaws.com/alexa-transporter/picture/door.jpg"
-                });
+            intent.initial(currentGame);
+            intent.checkNextStatus(currentGame, currentGame.data.position, response);
         });
     };
 };
+
 exports.register = registerEventHandlers;

@@ -1,22 +1,18 @@
 
 
 var grid = [
-	[0, 0, 0, 0, 0, 0, 0, 0, 0], 
-	[0, 0, 0, 0, 0, 0, 0, 0, 0], 
-	[0, 0, 0, 0, 0, 0, 0, 0, 0], 
-	[0, 0, 0, 5, 0, 0, 0, 0, 0], 
-	[0, 0, 0, 3, 1, 0, 0, 0, 0], 
-	[0, 0, 0, 0, 0, 0, 0, 0, 0], 
-	[0, 0, 0, 0, 0, 0, 0, 0, 0], 
-	[0, 0, 0, 0, 0, 0, 0, 0, 0], 
-	[0, 0, 0, 0, 0, 0, 0, 0, 0] 
+	[0, 0, 0, 0, 0], 
+	[0, 5, 0, 0, 0], 
+	[0, 3, 1, 0, 0], 
+	[0, 0, 0, 0, 0], 
+	[0, 0, 0, 0, 0]
 ]
 
 
 var TestItem1 = {
 	1 : {
 		scene : "empty small old room, \
-		         a door on the left, a photo on the wall"
+		         a door on the left, a photo on the wall",
 		search : 2
 	},
 	2 : {
@@ -24,8 +20,9 @@ var TestItem1 = {
 	},
 	3 : {
 		scene : "Wow, looks like it is a big dinning room. \
-		         There is a table and three chairs."
+		         There is a table and three chairs.",
 		search: 4
+	},
     4 : {
     	scene: "there is letter"
     }
@@ -49,10 +46,11 @@ var TestItem2 = {
 		         a giant door is to the north</speak>",
 		intentedSearch : 4,
 		intentedMove : 5
+	},
     4 : {
     	scene : "<speak>there is letter</speak>",
     	intentedMove: 5
-    }
+    },
     5 : {
     	scene : "<speak>You have escaped the room</speak>"
     }
@@ -64,4 +62,3 @@ module.exports = {
 	item : TestItem2
 };
 
-module.exports = map;
