@@ -19,7 +19,7 @@ var item = {
 		IntentedSearch: 5
 	},
 	3 : {
-		scene : "<speak>Oh, I find a door here.</speak>"//,
+		scene : "<speak>Oh, I find a door here. But it's locked.</speak>"//,
 		// image:{
 
 		// }
@@ -36,7 +36,11 @@ var item = {
     },
     6:{
     	scene : "<speak>OK, Let me check <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/snif.mp3\"/> em <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/open-box.mp3\"/>  <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/scream.mp3\"/> <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/cat.mp3\"/> A cat!, it run to the east!</speak>"
-    }
+    },
+	7 : {
+		scene : "<speak>Yes, the door is open. I escaped</speak>",
+		escaped:true
+	},
 }
 
 

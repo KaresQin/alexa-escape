@@ -60,6 +60,17 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
         }
     };
 
+    intentHandlers.sayHelloIntent = function (intent, session, response) {
+        storage.loadGame(session, function (currentGame) {
+            //open the door
+            map.grid[4][1] = 7
+            response.ask({
+                type:"SSML",
+                speech:"<speak><audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/open-door.mp3\"/> Woo, It's open?</speak>"
+            });
+        }
+    };
+
     intentHandlers['AMAZON.CancelIntent'] = function (intent, session, response) {
         if (skillContext.needMoreHelp) {
             response.tell('Okay. I\'m teleporting back to assist you. Hope you enjoy the game');
