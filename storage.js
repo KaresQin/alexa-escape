@@ -55,7 +55,6 @@ var storage = (function () {
                     }
                 }
             }, function (err, data) {
-                console.log("putItem", err, data)
                 if (err) {
                     console.log(err, err.stack);
                 }

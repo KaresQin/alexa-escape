@@ -4,6 +4,7 @@ var textHelper = require('./textHelper'),
 
 var registerIntentHandlers = function (intentHandlers, skillContext) {
 
+<<<<<<< HEAD
 	intentHandlers.MoveNorthIntent = function (intent, session, response) {
         
         storage.loadGame(session, function (currentGame) {
@@ -12,6 +13,16 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
                     'Please tell me who\'s your first player?');
         		return;
         	}
+=======
+        intentHandlers.MoveNorthIntent = function (intent, session, response) {
+
+        storage.loadGame(session, function (currentGame) {
+		if(!currentGame.data.position[0] && !currentGame.data.position[1]){
+			response.ask('New game started. Who\'s your first player?',
+                    'Please tell me who\'s your first player?');
+			return;
+		}
+>>>>>>> m
         });
 
         var clonedArray = currentGame.data.position.concat();
@@ -35,10 +46,19 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
 };
 
 function checkNextStatus(x, y){
+<<<<<<< HEAD
 		//0 means wall
 		if(map[x][y] == 0){
 			return false;
 		} else{
 			return map[x][y];
 		}
+=======
+                //0 means wall
+                if(map[x][y] == 0){
+                        return false;
+                } else{
+                        return map[x][y];
+                }
+>>>>>>> m
 }

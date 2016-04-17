@@ -10,7 +10,6 @@
 
 'use strict';
 var storage = require('./storage');
-// var utils = require('./utils');
 var map = require('./map');
 
 
