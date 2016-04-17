@@ -73,7 +73,7 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
 
     intentHandlers['AMAZON.CancelIntent'] = function (intent, session, response) {
         if (skillContext.needMoreHelp) {
-            response.tell('Okay. I\'m teleporting back to assist you. Hope you enjoy the game');
+            response.tell("I'm waiting here");
         } else {
             response.tell('');
         }
@@ -81,7 +81,7 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
 
     intentHandlers['AMAZON.StopIntent'] = function (intent, session, response) {
         if (skillContext.needMoreHelp) {
-            response.tell('Okay. I\'m teleporting back to assist you. Hope you enjoy the game');
+            response.tell("I'm waiting here");
         } else {
             response.tell('');
         }
@@ -94,7 +94,7 @@ function initialResponse(currentGame, response){
     if(!x && !y){
         response.ask({
             type:"SSML",
-            speech:"<speak>Really? OK, I'm in. <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/portal.mp3\"/> <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/transport.mp3\"/> cool <break time=\"2s\"/> oh, no. <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/falling-shoe.mp3\"/> It seems like that I fall down in a hole. It\'s really dark here. What the . well well, what direction should I go</speak>"
+            speech:"<speak>Really? OK, I'm in. <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/portal.mp3\"/> <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/transport.mp3\"/> cool <break time=\"2s\"/> oh, no. <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/falling-shoe.mp3\"/> It seems like that I fall down in a hole. It\'s really dark here. What the <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/beep.mp3\"/> well well, what direction should I go</speak>"
         });
         currentGame.data.position[0] = currentGame.data.position[1] = 2;
         currentGame.update(currentGame.data.position);
