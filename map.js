@@ -40,7 +40,7 @@ var item = {
     	scene : "<speak>OK, Let me check <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/snif.mp3\"/> <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/open-box.mp3\"/>  <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/scream.mp3\"/> <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/cat.mp3\"/> A cat!, it run to the east!</speak>"
     },
 	7 : {
-		scene : "<speak>Yes, the door is open. I escaped</speak>",
+		scene : "<speak>Yes, the door is open. I escaped, I want to sing a song for you <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/laa.mp3\"/></speak>",
 		escaped:true
 	},
 }
