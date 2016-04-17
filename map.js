@@ -19,7 +19,7 @@ var item = {
 		intentedSearch: 5
 	},
 	3 : {
-		scene : "<speak>Oh, I find a door here. But it's locked. Could you see that?</speak>"
+		scene : "<speak>Oh, I find a door here. But it's locked. What shall I do?</speak>"
 	},
     4 : {
     	scene : "<speak>there is box, should I open it?</speak>",
