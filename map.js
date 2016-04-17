@@ -12,7 +12,7 @@ var grid = [
 
 var item = {
 	1 : {
-		scene : "<speak>I am here.</speak>"
+		scene : "<speak>I\'m here.</speak>"
 	},
 	2 : {
 		scene : "<speak>There is table</speak>",
