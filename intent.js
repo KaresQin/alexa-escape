@@ -17,9 +17,7 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
     intentHandlers.NewGameIntent = function (intent, session, response) {
         //reset scores for all existing players
         storage.loadGame(session, function (currentGame) {
-            if(!initial(currentGame, response)){
-                checkNextStatus(currentGame, currentGame.data.position, response);    
-            }
+            initialResponse(currentGame, response)
         });
     };
 
@@ -80,12 +78,18 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
     };
 };
 
-function initial(currentGame, response){
-    if(!currentGame.data.position[0] && !currentGame.data.position[1]){
+function initialResponse(currentGame, response){
+    var x = currentGame.data.position[0];
+    var y = currentGame.data.position[1];
+    if(!x && !y){
         response.ask('New game started. Who\'s your first player?',
         'Please tell me who\'s your first player?');
         currentGame.data.position[0] = currentGame.data.position[1] = 2;
         currentGame.update(currentGame.data.position);
+        return true;
+    }
+    else if(map.grid[x] && map.grid[x][y]){
+        response.ask('Yes, I am still here, What should I do?');
         return true;
     }
 }
@@ -97,11 +101,38 @@ function checkNextStatus(currentGame, clonedArray, response){
     if(map.grid[x] && map.grid[x][y]){
         //call a function and then update the array
         console.log("in", x, y);
-        if(!outputResponseAndCheck(currentGame, map.grid[x][y], response)){
-            currentGame.update(clonedArray);
-        }
+        currentGame.update(clonedArray);
+        outputResponseAndCheck(currentGame, map.grid[x][y], response)
     } else{
         response.ask('there is a wall, what\'s your next step?');
+    }
+}
+
+function intentedSearch(currentGame, clonedArray, response){
+    var x = clonedArray[0];
+    var y = clonedArray[1];
+    console.log("search", x, y);
+    if(map.grid[x] && map.grid[x][y] && map.grid[x][y].intentedSearch){
+        //call a function and then update the array
+        console.log("searching resut", x, y);
+        outputResponseAndCheck(currentGame, map.grid[x][y].intentedSearch, response);
+    } else{
+        response.ask('Nothing here.');
+    }
+}
+
+function intentedMove(currentGame, clonedArray, response){
+    var x = clonedArray[0];
+    var y = clonedArray[1];
+    console.log("intented move", x, y);
+    if(map.grid[x] && map.grid[x][y] && map.grid[x][y].intentedMove){
+        //call a function and then update the array
+        console.log("move to", x, y);
+        currentGame.data.position = map.grid[x][y].intentedMove;
+        currentGame.update(map.grid[x][y].intentedMove);
+        outputResponseAndCheck(currentGame, currentGame.data.position, response);
+    } else{
+        response.ask('Move where?');
     }
 }
 
@@ -134,7 +165,7 @@ function outputResponseAndCheck(currentGame, status, response){
     }
 
 }
-exports.initial = initial;
+exports.initialResponse = initialResponse;
 exports.checkNextStatus = checkNextStatus;
 exports.outputResponseAndCheck = outputResponseAndCheck;
 exports.register = registerIntentHandlers;
