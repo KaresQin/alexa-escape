@@ -114,21 +114,6 @@ function intentedSearch(currentGame, clonedArray, response){
     }
 }
 
-function intentedMove(currentGame, clonedArray, response){
-    var x = clonedArray[0];
-    var y = clonedArray[1];
-    console.log("intented move", x, y);
-    if(map.grid[x] && map.grid[x][y] && map.grid[x][y].intentedMove){
-        //call a function and then update the array
-        console.log("move to", x, y);
-        currentGame.data.position = map.grid[x][y].intentedMove;
-        currentGame.update(map.grid[x][y].intentedMove);
-        outputResponseAndCheck(currentGame, currentGame.data.position, response);
-    } else{
-        response.ask('Move where?');
-    }
-}
-
 function outputResponseAndCheck(currentGame, status, response){
     if(map.item[status]){
         var itemData = map.item[status];
