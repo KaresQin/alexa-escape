@@ -24,8 +24,9 @@ var registerEventHandlers = function (eventHandlers, skillContext) {
         //Speak welcome message and ask user questions
         //based on whether there are players or not.
         storage.loadGame(session, function (currentGame) {
-            intent.initial(currentGame);
-            intent.checkNextStatus(currentGame, currentGame.data.position, response);
+            if(!intent.initial(currentGame, response)){
+                intent.checkNextStatus(currentGame, currentGame.data.position, response);    
+            }
         });
     };
 };

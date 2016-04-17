@@ -135,7 +135,6 @@ Response.prototype = (function () {
             shouldEndSession: options.shouldEndSession
         };
         if (options.reprompt) {
-            console.log("createSpeechObject(options.reprompt)", createSpeechObject(options.reprompt))
             alexaResponse.reprompt = {
                 outputSpeech: createSpeechObject(options.reprompt)
             };

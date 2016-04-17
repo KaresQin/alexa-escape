@@ -13,6 +13,8 @@ var AWS = require("aws-sdk");
 AWS.config.update({accessKeyId: 'AKIAI622QKRBOFAI5CVQ', secretAccessKey: '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'});
 AWS.config.update({region: 'us-east-1'});
 
+var userData;
+
 var storage = (function () {
     var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
@@ -39,67 +41,73 @@ var storage = (function () {
             this.data.position = position;
             this.save();
         },
+        reset:function(){
+            this.update([0,0]);
+        },
         save: function (callback) {
-            console.log("start save");
+            console.log("start save", this.data);
             //save the game states in the session,
             //so next time we can save a read from dynamoDB
             this._session.attributes.currentGame = this.data;
-            dynamodb.putItem({
-                TableName: 'TransporterUserData',
-                Item: {
-                    CustomerId: {
-                        S: this._session.user.userId
-                    },
-                    Data: {
-                        S: JSON.stringify(this.data)
-                    }
-                }
-            }, function (err, data) {
-                if (err) {
-                    console.log(err, err.stack);
-                }
-                if (callback) {
-                    callback();
-                }
-            });
+            userData = this.data;
+
+            // dynamodb.updateItem({
+            //     TableName: 'TransporterUserData',
+            //     Key: {
+            //         "CustomerId" : {
+            //             "S" : this._session.user.userId
+            //         }
+            //     },
+            //     AttributeUpdates :{
+            //         "Data"   : {
+            //             Value : {"S": JSON.stringify(this.data)}, 
+            //             Action : "PUT"
+            //         }
+            //     }
+            // }, function (err, data) {
+            //     if (err) {
+            //         console.log(err, err.stack);
+            //     }
+            //     if (callback) {
+            //         callback();
+            //     }
+            // });
         }
     };
 
     return {
         loadGame: function (session, callback) {
-            if (session.attributes.currentGame) {
-                console.log('get game from session=' + session.attributes.currentGame);
-                callback(new Game(session, session.attributes.currentGame));
-                return;
-            }
-            dynamodb.getItem({
-                TableName: 'TransporterUserData',
-                Key: {
-                    CustomerId: {
-                        S: session.user.userId
-                    }
-                }
-            }, function (err, data) {
-                var currentGame;
-                console.log("get item back", err, data)
-                if (err) {
-                    console.log(err, err.stack);
-                    currentGame = new Game(session);
-                    session.attributes.currentGame = currentGame.data;
-                    callback(currentGame);
-                } else if (data.Item === undefined) {
-                    currentGame = new Game(session);
-                    session.attributes.currentGame = currentGame.data;
+            
+            callback(new Game(session, userData));
 
-                    console.log('renew game', currentGame);
-                    callback(currentGame);
-                } else {
-                    console.log('get game from dynamodb=' + data.Item.Data.S);
-                    currentGame = new Game(session, JSON.parse(data.Item.Data.S));
-                    session.attributes.currentGame = currentGame.data;
-                    callback(currentGame);
-                }
-            });
+            // dynamodb.getItem({
+            //     TableName: 'TransporterUserData',
+            //     Key: {
+            //         CustomerId: {
+            //             S: session.user.userId
+            //         }
+            //     }
+            // }, function (err, data) {
+            //     var currentGame;
+            //     console.log("get item back", err, data)
+            //     if (err) {
+            //         console.log(err, err.stack);
+            //         currentGame = new Game(session);
+            //         session.attributes.currentGame = currentGame.data;
+            //         callback(currentGame);
+            //     } else if (data.Item === undefined) {
+            //         currentGame = new Game(session);
+            //         session.attributes.currentGame = currentGame.data;
+
+            //         console.log('renew game', currentGame);
+            //         callback(currentGame);
+            //     } else {
+            //         console.log('get game from dynamodb=' + data.Item.Data.S);
+            //         currentGame = new Game(session, JSON.parse(data.Item.Data.S));
+            //         session.attributes.currentGame = currentGame.data;
+            //         callback(currentGame);
+            //     }
+            // });
         },
         newGame: function (session) {
             return new Game(session);

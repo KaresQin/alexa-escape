@@ -11,8 +11,8 @@ var grid = [
 
 var TestItem1 = {
 	1 : {
-		scene : "empty small old room, \
-		         a door on the left, a photo on the wall",
+		scene : "I entered a empty room. I saw a door on the left, \
+		         and there is a photo on the wall",
 		search : 2
 	},
 	2 : {
@@ -31,8 +31,8 @@ var TestItem1 = {
 
 var TestItem2 = {
 	1 : {
-		scene : "<speak>empty small old room, \
-		         a door is to the west, a photo on the wall</speak>",
+		scene : "<speak>  I saw a door on the left, \
+		         and there is a photo on the wall</speak>",
 		intentedSearch : 2,
 		intentedMove : 3
 	},
@@ -41,7 +41,8 @@ var TestItem2 = {
 		IntentedMove: 3
 	},
 	3 : {
-		scene : "<speak>Wow, looks like it is a big dinning room. \
+		scene : "<speak>Wow, looks like it is a big dining room. \
+					<audio src=\"https://s3.amazonaws.com/alexa-transporter/audio/rat.mp3\"/> \
 		         There are a table and three chairs. \
 		         a giant door is to the north</speak>",
 		intentedSearch : 4,
@@ -52,7 +53,8 @@ var TestItem2 = {
     	intentedMove: 5
     },
     5 : {
-    	scene : "<speak>You have escaped the room</speak>"
+    	scene : "<speak>You have escaped the room</speak>",
+    	escaped : true
     }
 }
 
