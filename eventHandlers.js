@@ -40,7 +40,10 @@ var registerEventHandlers = function (eventHandlers, skillContext) {
                 speechOutput += 'ScoreKeeper, What can I do for you?';
                 reprompt = textHelper.nextHelp;
             }
-            response.ask(speechOutput, reprompt);
+            response.askWithCard(speechOutput, reprompt, "right now " + new Date(), "It looks like a door?", {
+                    "smallImageUrl":  "https://s3.amazonaws.com/alexa-transporter/picture/door.jpg",
+                    "largeImageUrl":  "https://s3.amazonaws.com/alexa-transporter/picture/door.jpg"
+                });
         });
     };
 };
