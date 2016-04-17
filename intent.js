@@ -10,6 +10,7 @@
 
 'use strict';
 var storage = require('./storage');
+var utils = require('./utils');
 
 var registerIntentHandlers = function (intentHandlers, skillContext) {
     intentHandlers.NewGameIntent = function (intent, session, response) {
@@ -41,6 +42,18 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
         });
     };
 
+
+
+    intentHandlers.GoWestIntent = function (intent, session, response) {
+        //reset scores for all existing players
+        storage.loadGame(session, function (currentGame) {
+        	var result = utils.move.west();
+        	switch(result.status){
+        		case ""
+        	}
+
+        })
+    };
 
 
     intentHandlers['AMAZON.CancelIntent'] = function (intent, session, response) {

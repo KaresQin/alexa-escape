@@ -10,6 +10,7 @@
 
 'use strict';
 var storage = require('./storage');
+var utils = require('./utils');
 
 var registerEventHandlers = function (eventHandlers, skillContext) {
     eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
