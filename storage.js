@@ -28,8 +28,6 @@ var storage = (function () {
             this.data = data;
         } else {
             this.data = {
-                players: [],
-                scores: {},
                 position : [0,0]
             };
         }
@@ -37,18 +35,6 @@ var storage = (function () {
     }
 
     Game.prototype = {
-        isEmptyScore: function () {
-            //check if any one had non-zero score,
-            //it can be used as an indication of whether the game has just started
-            var allEmpty = true;
-            var gameData = this.data;
-            gameData.players.forEach(function (player) {
-                if (gameData.scores[player] !== 0) {
-                    allEmpty = false;
-                }
-            });
-            return allEmpty;
-        },
         update:function(option){
             if(option.position){
                 this.data.position = option.position;
@@ -60,7 +46,7 @@ var storage = (function () {
             //so next time we can save a read from dynamoDB
             this._session.attributes.currentGame = this.data;
             dynamodb.putItem({
-                TableName: 'ScoreKeeperUserData',
+                TableName: 'TransporterUserData',
                 Item: {
                     CustomerId: {
                         S: this._session.user.userId
@@ -88,7 +74,7 @@ var storage = (function () {
                 return;
             }
             dynamodb.getItem({
-                TableName: 'ScoreKeeperUserData',
+                TableName: 'TransporterUserData',
                 Key: {
                     CustomerId: {
                         S: session.user.userId
