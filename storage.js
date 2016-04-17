@@ -18,6 +18,10 @@ var storage = (function () {
 
     /*
      * The Game class stores all game states for the user
+     * go north : position [0,+1]
+     * go south : position [0,-1]
+     * go west : position [-1,0]
+     * go east : position [1,0]
      */
     function Game(session, data) {
         if (data) {
@@ -25,7 +29,8 @@ var storage = (function () {
         } else {
             this.data = {
                 players: [],
-                scores: {}
+                scores: {},
+                position : [0,0]
             };
         }
         this._session = session;
@@ -43,6 +48,12 @@ var storage = (function () {
                 }
             });
             return allEmpty;
+        },
+        update:function(option){
+            if(option.position){
+                this.data.position = option.position;
+                this.save();
+            }
         },
         save: function (callback) {
             //save the game states in the session,
