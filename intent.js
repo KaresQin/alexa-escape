@@ -57,7 +57,7 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
         storage.loadGame(session, function (currentGame) {
             var clonedArray = currentGame.data.position.concat();
             intentedSearch(currentGame, clonedArray, response);
-        }
+        });
     };
 
     intentHandlers.sayHelloIntent = function (intent, session, response) {
