@@ -25,20 +25,9 @@ var registerEventHandlers = function (eventHandlers, skillContext) {
         storage.loadGame(session, function (currentGame) {
             var speechOutput = '',
                 reprompt;
-            if (currentGame.data.players.length === 0) {
-                speechOutput += 'ScoreKeeper, Let\'s start your game. Who\'s your first player?';
-                reprompt = "Please tell me who is your first player?";
-            } else if (currentGame.isEmptyScore()) {
-                speechOutput += 'ScoreKeeper, '
-                    + 'you have ' + currentGame.data.players.length + ' player';
-                if (currentGame.data.players.length > 1) {
-                    speechOutput += 's';
-                }
-                speechOutput += ' in the game. You can give a player points, add another player, reset all players or exit. Which would you like?';
-                reprompt = "";
-            } else {
-                speechOutput += 'ScoreKeeper, What can I do for you?';
-                reprompt = "";
+            reprompt = {
+                type : "SSML",
+                speech : "<speak>Woo, I open it now <audio src=\"https://s3.amazonaws.com/alexa-transporter/audio/open-box.mp3\" />. It's a key.</speak>"
             }
             response.askWithCard(speechOutput, reprompt, "right now", "It looks like a door?", {
                     "smallImageUrl":  "https://s3.amazonaws.com/alexa-transporter/picture/door.jpg",

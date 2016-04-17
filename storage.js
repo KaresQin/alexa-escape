@@ -28,7 +28,7 @@ var storage = (function () {
             this.data = data;
         } else {
             this.data = {
-                position : [0,0]
+                position : [1,1]
             };
         }
         this._session = session;
@@ -82,6 +82,7 @@ var storage = (function () {
                 }
             }, function (err, data) {
                 var currentGame;
+                console.log("get item back", err, data)
                 if (err) {
                     console.log(err, err.stack);
                     currentGame = new Game(session);
@@ -90,6 +91,8 @@ var storage = (function () {
                 } else if (data.Item === undefined) {
                     currentGame = new Game(session);
                     session.attributes.currentGame = currentGame.data;
+
+                    console.log('renew game', currentGame);
                     callback(currentGame);
                 } else {
                     console.log('get game from dynamodb=' + data.Item.Data.S);

@@ -17,23 +17,23 @@ var APP_ID = undefined;//replace with "amzn1.echo-sdk-ams.app.[your-unique-value
 var skillContext = {};
 
 /**
- * ScoreKeeper is a child of AlexaSkill.
+ * Transporter is a child of AlexaSkill.
  * To read more about inheritance in JavaScript, see the link below.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript#Inheritance
  */
-var ScoreKeeper = function () {
+var Transporter = function () {
     AlexaSkill.call(this, APP_ID);
     skillContext.needMoreHelp = true;
 };
 
 
 // Extend AlexaSkill
-ScoreKeeper.prototype = Object.create(AlexaSkill.prototype);
-ScoreKeeper.prototype.constructor = ScoreKeeper;
+Transporter.prototype = Object.create(AlexaSkill.prototype);
+Transporter.prototype.constructor = Transporter;
 
-eventHandlers.register(ScoreKeeper.prototype.eventHandlers, skillContext);
-intentHandlers.register(ScoreKeeper.prototype.intentHandlers, skillContext);
+eventHandlers.register(Transporter.prototype.eventHandlers, skillContext);
+intentHandlers.register(Transporter.prototype.intentHandlers, skillContext);
 
-module.exports = ScoreKeeper;
+module.exports = Transporter;
 
