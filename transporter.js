@@ -36,4 +36,3 @@ eventHandlers.register(Transporter.prototype.eventHandlers, skillContext);
 intentHandlers.register(Transporter.prototype.intentHandlers, skillContext);
 
 module.exports = Transporter;
-

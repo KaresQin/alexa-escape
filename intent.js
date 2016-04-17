@@ -10,28 +10,65 @@
 
 'use strict';
 var storage = require('./storage');
-var utils = require('./utils');
+var map = require('./map');
+
 
 var registerIntentHandlers = function (intentHandlers, skillContext) {
     intentHandlers.NewGameIntent = function (intent, session, response) {
         //reset scores for all existing players
         storage.loadGame(session, function (currentGame) {
-        	response.tell('');
+		      response.tell('');
+        });
+
+
+    };
+
+    intentHandlers.MoveNorthIntent = function (intent, session, response) {
+        storage.loadGame(session, function (currentGame) {
+            initial(currentGame);
+            var clonedArray = currentGame.data.position.concat();
+            clonedArray[0] -= 1;
+            checkNextStatus(clonedArray, response);
         });
     };
 
+    intentHandlers.MoveSouthIntent = function (intent, session, response) {
+        storage.loadGame(session, function (currentGame) {
+            initial(currentGame);
+            var clonedArray = currentGame.data.position.concat();
+            clonedArray[0] += 1;
+            checkNextStatus(clonedArray, response);
+        });
+    };
 
+    intentHandlers.MoveWestIntent = function (intent, session, response) {
+        storage.loadGame(session, function (currentGame) {
+            initial(currentGame);
+            var clonedArray = currentGame.data.position.concat();
+            clonedArray[1] -= 1;
+            checkNextStatus(clonedArray, response);
+        });
+    };
+
+    intentHandlers.MoveEastIntent = function (intent, session, response) {
+        storage.loadGame(session, function (currentGame) {
+            initial(currentGame);
+            var clonedArray = currentGame.data.position.concat();
+            clonedArray[1] += 1;
+            checkNextStatus(clonedArray, response);
+        });
+    };
 
     intentHandlers.GoWestIntent = function (intent, session, response) {
         //reset scores for all existing players
         storage.loadGame(session, function (currentGame) {
-        	var result = utils.move.west();
+		  var result = utils.move.west();
         })
     };
     intentHandlers.ResetPlayersIntent = function (intent, session, response) {
         //reset scores for all existing players
         storage.loadGame(session, function (currentGame) {
-        	var result = utils.move.west();
+    		var result = utils.move.west();
         })
     };
 
@@ -52,4 +89,39 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
         }
     };
 };
+
+function initial(currentGame){
+    if(!currentGame.data.position[0] && !currentGame.data.position[1]){
+        response.ask('New game started. Who\'s your first player?',
+        'Please tell me who\'s your first player?');
+        currentGame.data.position[0] = currentGame.data.position[1] = 2;
+        currentGame.update(currentGame.data.position);
+    }
+}
+
+function checkNextStatus(clonedArray, response){
+    var x = clonedArray[0];
+    var y = clonedArray[1];
+    if(map[x] && map[x][y]){
+        //call a function and then update the array
+        // outputResponse(status, response);
+        return storage.update(clonedArray);
+    } else{
+        response.tell('there is a wall');
+    }
+}
+
+function outputResponse(status, response){
+    switch(status) {
+    case 1:
+        response.tell("");
+        break;
+    case 2:
+        response.tell("");
+        break;
+    default:
+        response.tell("Oops, something is wrong")
+    }
+}
+
 exports.register = registerIntentHandlers;

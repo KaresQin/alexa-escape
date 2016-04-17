@@ -28,20 +28,19 @@ var storage = (function () {
             this.data = data;
         } else {
             this.data = {
-                position : [1,1]
+                position : [0,0]
             };
         }
         this._session = session;
     }
 
     Game.prototype = {
-        update:function(option){
-            if(option.position){
-                this.data.position = option.position;
-                this.save();
-            }
+        update:function(position){
+            this.data.position = position;
+            this.save();
         },
         save: function (callback) {
+            console.log("start save");
             //save the game states in the session,
             //so next time we can save a read from dynamoDB
             this._session.attributes.currentGame = this.data;
