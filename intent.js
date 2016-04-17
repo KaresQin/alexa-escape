@@ -52,13 +52,6 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
             checkNextStatus(currentGame, clonedArray, response);
         });
     };
-  
-    intentHandlers.ResetPlayersIntent = function (intent, session, response) {
-        //reset scores for all existing players
-        storage.loadGame(session, function (currentGame) {
-        	var result = utils.move.west();
-        })
-    };
 
 
     intentHandlers['AMAZON.CancelIntent'] = function (intent, session, response) {

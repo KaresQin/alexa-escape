@@ -9,27 +9,7 @@ var grid = [
 ]
 
 
-var TestItem1 = {
-	1 : {
-		scene : "I entered a empty room. I saw a door on the left, \
-		         and there is a photo on the wall",
-		search : 2
-	},
-	2 : {
-		scene : "it's a woman's potrait."
-	},
-	3 : {
-		scene : "Wow, looks like it is a big dinning room. \
-		         There is a table and three chairs.",
-		search: 4
-	},
-    4 : {
-    	scene: "there is letter"
-    }
-
-}
-
-var TestItem2 = {
+var item = {
 	1 : {
 		scene : "<speak>I saw a door on the west.</speak>",
 		intentedSearch : 2,
@@ -59,6 +39,6 @@ var TestItem2 = {
 
 module.exports = {
 	grid: grid,
-	item : TestItem2
+	item : item
 };
 
