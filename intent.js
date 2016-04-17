@@ -92,7 +92,10 @@ function initialResponse(currentGame, response){
     var x = currentGame.data.position[0];
     var y = currentGame.data.position[1];
     if(!x && !y){
-        response.ask('It seems like that I fall down in a hole. It\'s really dark here. What direction should I go');
+        response.ask({
+            type:"SSML",
+            speech:"<speak>Really? OK, I'm in. <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/portal.mp3\"/> <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/transport.mp3\"/> cool <break time=\"2s\"/> oh, no. <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/falling-shoe.mp3\"/> It seems like that I fall down in a hole. It\'s really dark here. What the . well well, what direction should I go</speak>"
+        });
         currentGame.data.position[0] = currentGame.data.position[1] = 2;
         currentGame.update(currentGame.data.position);
         return true;
@@ -137,10 +140,10 @@ function outputResponseAndCheck(currentGame, status, response){
 
             if(itemData.image){
 
-                response.ask({
+                response.askWithCard({
                     type:"SSML",
                     speech:itemData.scene
-                }, "", "", "", itemData.image);
+                }, "", "come from alexa", "please help", itemData.image);
             }
             else{
                 response.ask({
