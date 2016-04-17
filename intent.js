@@ -60,15 +60,15 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
         });
     };
 
-    intentHandlers.sayHelloIntent = function (intent, session, response) {
+    intentHandlers.SayHelloIntent = function (intent, session, response) {
         storage.loadGame(session, function (currentGame) {
             //open the door
-            map.grid[4][1] = 7
+            map.grid[1][4] = 7
             response.ask({
                 type:"SSML",
                 speech:"<speak><audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/open-door.mp3\"/> Woo, It's open?</speak>"
             });
-        }
+        })
     };
 
     intentHandlers['AMAZON.CancelIntent'] = function (intent, session, response) {
@@ -120,11 +120,11 @@ function checkNextStatus(currentGame, clonedArray, response){
 function intentedSearch(currentGame, clonedArray, response){
     var x = clonedArray[0];
     var y = clonedArray[1];
-    console.log("search", x, y);
-    if(map.grid[x] && map.grid[x][y] && map.grid[x][y].intentedSearch){
+    console.log("search", x, y, map.grid[x][y], map.item[map.grid[x][y]], map.grid[x][y].intentedSearch);
+    if(map.grid[x] && map.grid[x][y] && map.item[map.grid[x][y]].intentedSearch){
         //call a function and then update the array
         console.log("searching resut", x, y);
-        outputResponseAndCheck(currentGame, map.grid[x][y].intentedSearch, response);
+        outputResponseAndCheck(currentGame, map.item[map.grid[x][y]].intentedSearch, response);
     } else{
         response.ask('Nothing here.');
     }
@@ -136,10 +136,11 @@ function outputResponseAndCheck(currentGame, status, response){
         if(!itemData.escaped){
 
             if(itemData.image){
-                response.askWithCard({
+
+                response.ask({
                     type:"SSML",
                     speech:itemData.scene
-                });
+                }, "", "", "", itemData.image);
             }
             else{
                 response.ask({
