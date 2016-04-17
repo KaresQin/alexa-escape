@@ -49,64 +49,12 @@ var storage = (function () {
             //so next time we can save a read from dynamoDB
             this._session.attributes.currentGame = this.data;
             userData = this.data;
-
-            // dynamodb.updateItem({
-            //     TableName: 'TransporterUserData',
-            //     Key: {
-            //         "CustomerId" : {
-            //             "S" : this._session.user.userId
-            //         }
-            //     },
-            //     AttributeUpdates :{
-            //         "Data"   : {
-            //             Value : {"S": JSON.stringify(this.data)}, 
-            //             Action : "PUT"
-            //         }
-            //     }
-            // }, function (err, data) {
-            //     if (err) {
-            //         console.log(err, err.stack);
-            //     }
-            //     if (callback) {
-            //         callback();
-            //     }
-            // });
         }
     };
 
     return {
         loadGame: function (session, callback) {
-            
             callback(new Game(session, userData));
-
-            // dynamodb.getItem({
-            //     TableName: 'TransporterUserData',
-            //     Key: {
-            //         CustomerId: {
-            //             S: session.user.userId
-            //         }
-            //     }
-            // }, function (err, data) {
-            //     var currentGame;
-            //     console.log("get item back", err, data)
-            //     if (err) {
-            //         console.log(err, err.stack);
-            //         currentGame = new Game(session);
-            //         session.attributes.currentGame = currentGame.data;
-            //         callback(currentGame);
-            //     } else if (data.Item === undefined) {
-            //         currentGame = new Game(session);
-            //         session.attributes.currentGame = currentGame.data;
-
-            //         console.log('renew game', currentGame);
-            //         callback(currentGame);
-            //     } else {
-            //         console.log('get game from dynamodb=' + data.Item.Data.S);
-            //         currentGame = new Game(session, JSON.parse(data.Item.Data.S));
-            //         session.attributes.currentGame = currentGame.data;
-            //         callback(currentGame);
-            //     }
-            // });
         },
         newGame: function (session) {
             return new Game(session);
