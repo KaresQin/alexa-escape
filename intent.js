@@ -110,6 +110,7 @@ function intentedSearch(currentGame, clonedArray, response){
     var x = clonedArray[0];
     var y = clonedArray[1];
     console.log("search", x, y);
+    console.log("checkIntent", map.grid[x][y].intentedSearch);
     if(map.grid[x] && map.grid[x][y] && map.grid[x][y].intentedSearch){
         //call a function and then update the array
         console.log("searching resut", x, y);
