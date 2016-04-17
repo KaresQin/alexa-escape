@@ -53,6 +53,12 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
         });
     };
 
+    intentHandlers.LookAroundIntent = function (intent, session, response) {
+        storage.loadGame(session, function (currentGame) {
+            var clonedArray = currentGame.data.position.concat();
+            intentedSearch(currentGame, clonedArray, response);
+        }
+    };
 
     intentHandlers['AMAZON.CancelIntent'] = function (intent, session, response) {
         if (skillContext.needMoreHelp) {
@@ -75,8 +81,7 @@ function initialResponse(currentGame, response){
     var x = currentGame.data.position[0];
     var y = currentGame.data.position[1];
     if(!x && !y){
-        response.ask('New game started. Who\'s your first player?',
-        'Please tell me who\'s your first player?');
+        response.ask('It seems like that I fall down in a hole. It\'s really dark here. What direction should I go');
         currentGame.data.position[0] = currentGame.data.position[1] = 2;
         currentGame.update(currentGame.data.position);
         return true;
