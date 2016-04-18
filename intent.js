@@ -17,7 +17,9 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
     intentHandlers.NewGameIntent = function (intent, session, response) {
         //reset scores for all existing players
         storage.loadGame(session, function (currentGame) {
-            initialResponse(currentGame, response)
+            map.grid[1][4] = 3;
+            currentGame.reset();
+            initialResponse(currentGame, response);
         });
     };
 
@@ -66,7 +68,7 @@ var registerIntentHandlers = function (intentHandlers, skillContext) {
             map.grid[1][4] = 7
             response.ask({
                 type:"SSML",
-                speech:"<speak><audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/open-door.mp3\"/> Woo, It's open?</speak>"
+                speech:"<speak><audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/open-door.mp3\"/> Woo, The door is open?</speak>"
             });
         })
     };
@@ -94,7 +96,7 @@ function initialResponse(currentGame, response){
     if(!x && !y){
         response.ask({
             type:"SSML",
-            speech:"<speak>Really? OK, I'm in. <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/portal.mp3\"/> <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/transport.mp3\"/> cool <break time=\"2s\"/> oh, no. <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/falling-shoe.mp3\"/> It seems like that I fall down in a hole. It\'s really dark here. What the <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/beep.mp3\"/> well well, what direction should I go</speak>"
+            speech:"<speak>Really? OK, I'm in. <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/portal.mp3\"/> <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/transport.mp3\"/> cool <break time=\"2s\"/> oh, no. <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/falling-shoe.mp3\"/> It seems like that I fall down in a hole. It\'s really dark here. What the <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/beep.mp3\"/> well well, which direction should I go</speak>"
         });
         currentGame.data.position[0] = currentGame.data.position[1] = 2;
         currentGame.update(currentGame.data.position);
@@ -153,7 +155,11 @@ function outputResponseAndCheck(currentGame, status, response){
             }
         }
         else{
-            response.tell("Woo, I escaped.");
+            response.tell({
+                type:"SSML",
+                speech:"<speak>Yes, the door is open. I escaped, I want to sing a song for you <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/laa.mp3\"/></speak>"
+            });
+            map.grid[1][4] = 3;
             currentGame.reset();
             return true;
         }

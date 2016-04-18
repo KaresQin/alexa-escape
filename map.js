@@ -30,7 +30,7 @@ var item = {
     	intentedSearch: 6
     },
     5 : {
-    	scene : "<speak>There is a paper on the table, it looks like a password</speak>",
+    	scene : "<speak>There is a paper on the table, it looks like a password. Do you see that?</speak>",
     	image:{
     		smallImageUrl : "https://s3.amazonaws.com/angelhack-echo/image/SayHelloCard.jpg",
     		largeImageUrl : "https://s3.amazonaws.com/angelhack-echo/image/SayHelloCard.jpg" 
@@ -40,7 +40,7 @@ var item = {
     	scene : "<speak>OK, Let me check <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/snif.mp3\"/> <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/open-box.mp3\"/>  <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/scream.mp3\"/> <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/cat.mp3\"/> A cat!, it run to the east!</speak>"
     },
 	7 : {
-		scene : "<speak>Yes, the door is open. I escaped, I want to sing a song for you <audio src=\"https://s3.amazonaws.com/angelhack-echo/audio/laa.mp3\"/></speak>",
+		scene : "<speak>aha</speak>",
 		escaped:true
 	},
 }
